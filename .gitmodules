@@ -1,0 +1,9 @@
+[submodule "NauEnginePublic"]
+	path = NauEnginePublic
+	url = git@github.com:maksimus57/NauEnginePublic.git
+[submodule "NauEditorPublic"]
+	path = NauEditorPublic
+	url = git@github.com:maksimus57/NauEditorPublic.git
+[submodule "as"]
+	path = as
+	url = git@github.com:maksimus57/as.git
