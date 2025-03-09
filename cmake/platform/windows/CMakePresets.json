@@ -1,0 +1,199 @@
+﻿{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 27,
+        "patch": 1
+    },
+    "include": [
+        "../common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "windows-base",
+            "description": "Target Windows with the Visual Studio development environment",
+            "hidden": true,
+            "inherits": [
+                "os-independent",
+                "host-windows"
+            ],
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                }
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [ "Windows" ]
+                }
+            }
+        },
+
+        {
+            "name": "windows-base-clang",
+            "description": "Windows OS. Clang native version",
+            "hidden": true,
+            "inherits": "windows-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": {
+                    "value": "$env{LLVM_INSTALL_DIR}/bin/clang-cl.exe",
+                    "type": "FILEPATH"
+                },
+                "CMAKE_CXX_COMPILER": {
+                    "value": "$env{LLVM_INSTALL_DIR}/bin/clang-cl.exe",
+                    "type": "FILEPATH"
+                },
+                "CMAKE_LINKER": {
+                    "value": "$env{LLVM_INSTALL_DIR}/bin/lld-link.exe",
+                    "type": "FILEPATH"
+                }
+            },
+            "environment": {
+                "LDFLAGS": "-fuse-ld=lld-link",
+                "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/cmake/custom-triplets"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            }
+        },
+
+        {
+            "name": "windows-base-msvc",
+            "description": "Windows OS. MSCV build",
+            "hidden": true,
+            "inherits": "windows-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe",
+                "CMAKE_CXX_FLAGS": "/execution-charset:utf-8 /D_UNICODE /DUNICODE /experimental:external /external:anglebrackets /external:W0 /EHsc"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            }
+        },
+
+        {
+            "name": "windows-x64-clang-dynamic",
+            "displayName": "Clang x64 Dynamic",
+            "inherits": [
+                "windows-base-clang",
+                "ninja-multiconfig"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-win-llvm"
+            }
+        },
+        {
+            "name": "windows-x64-msvc-dynamic",
+            "displayName": "MSVC x64 Dynamic",
+            "inherits": [
+                "windows-base-msvc",
+                "ninja-multiconfig"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        },
+        {
+            "name": "windows-x64-clang-static",
+            "displayName": "Clang x64 Static",
+            "inherits": [
+                "windows-base-clang",
+                "ninja-multiconfig"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-win-llvm-static-md"
+            }
+        },
+        {
+            "name": "windows-x64-msvc-static",
+            "displayName": "MSVC x64 Static",
+            "inherits": [
+                "windows-base-msvc",
+                "ninja-multiconfig"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
+            }
+        },
+
+        {
+            "name": "windows-x64-msvc-dynamic-debug-local",
+            "displayName": "MSVC x64 Dynamic Debug (with local mebius-base)",
+            "description": "Allows simultaneously edit medriver and mebius-base",
+            "inherits": [
+                "windows-x64-msvc-dynamic",
+                "ninja-singleconfig"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "VCPKG_OVERLAY_PORTS": "${sourceDir}/vcpkg-debug-ports/ports/mebius-base/1.0.0;${sourceDir}/vcpkg-debug-ports/ports/vcpkg-from-local/1.0.0",
+                "VCPKG_FEATURE_FLAGS": "manifests,versions,registries,-binarycaching"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-x64-msvc-dynamic-debug",
+            "displayName": "MSVC x64 Dynamic Debug",
+            "configurePreset": "windows-x64-msvc-dynamic",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-x64-msvc-dynamic-release",
+            "displayName": "MSVC x64 Dynamic Release",
+            "configurePreset": "windows-x64-msvc-dynamic",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "windows-x64-msvc-static-debug",
+            "displayName": "MSVC x64 Static Debug",
+            "configurePreset": "windows-x64-msvc-static",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-x64-msvc-static-release",
+            "displayName": "MSVC x64 Static Release",
+            "configurePreset": "windows-x64-msvc-static",
+            "configuration": "RelWithDebInfo"
+        },
+
+        {
+            "name": "windows-x64-clang-dynamic-debug",
+            "displayName": "Windows Clang x64 Dynamic Debug",
+            "configurePreset": "windows-x64-clang-dynamic",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-x64-clang-dynamic-release",
+            "displayName": "Windows Clang x64 Dynamic Release",
+            "configurePreset": "windows-x64-clang-dynamic",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "windows-x64-clang-static-debug",
+            "displayName": "Windows Clang x64 Static Debug",
+            "configurePreset": "windows-x64-clang-static",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-x64-clang-static-release",
+            "displayName": "Windows Clang x64 Static Release",
+            "configurePreset": "windows-x64-clang-static",
+            "configuration": "RelWithDebInfo"
+        }
+    ]
+}

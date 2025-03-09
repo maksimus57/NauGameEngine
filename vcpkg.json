@@ -1,0 +1,40 @@
+{
+    "name": "NauGameEngine",
+    "version-string": "1.0.0.0",
+    "dependencies": [],
+    "default-features": [
+        "build-nau-engine"
+    ],
+    "features": {
+        "build-nau-engine": {
+            "description": "Nau Engine",
+            "dependencies": [
+                {
+                    "name": "",
+                    "version>=": ""
+                },
+                {
+                    "name": "",
+                    "version>=": ""
+                },
+                {
+                    "name": "",
+                    "version>=": ""
+                }
+            ]
+        },
+        "build-nau-editor": {
+            "description": "Nau Editor",
+            "dependencies": [
+                ""
+            ]
+        },
+        "build-nau-as": {
+            "description": "Nau Agnostic Scripting",
+            "dependencies": [
+                ""
+            ]
+        }
+    },
+    "builtin-baseline": "74ec888e385d189b42d6b398d0bbaa6f1b1d3b0e"
+}

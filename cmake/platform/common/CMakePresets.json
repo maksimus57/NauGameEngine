@@ -1,0 +1,82 @@
+﻿{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 31,
+        "patch": 1
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "description": "Placeholder configuration that buildPresets and testPresets can inherit from",
+            "hidden": true
+        },
+        {
+            "name": "os-independent",
+            "description": "Base Settings for all OSs",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "environment": {
+                "VCPKG_FEATURE_FLAGS": "manifests,versions,binarycaching",
+                "VCPKG_DISABLE_METRICS": "ON",
+                "VCPKG_BINARY_SOURCES": "clear;default,readwrite"
+            }
+        },
+        {
+            "name": "ninja-singleconfig",
+            "description": "Ninja Single-Config build",
+            "hidden": true,
+            "generator": "Ninja"
+        },
+        {
+            "name": "ninja-multiconfig",
+            "description": "Ninja Multi-Config build",
+            "hidden": true,
+            "generator": "Ninja Multi-Config",
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;RelWithDebInfo;Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "host-linux",
+            "description": "Specifies Linux host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "host-windows",
+            "description": "Specifies Windows host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "host-windows-linux",
+            "description": "Allows Windows or Linux to be used for host condition for configure preset",
+            "hidden": true,
+            "condition": {
+                "type": "inList",
+                "string": "${hostSystemName}",
+                "list": [
+                    "Linux",
+                    "Windows"
+                ]
+            }
+        }
+    ],
+    "buildPresets": [
+
+    ]
+}
