@@ -1,16 +1,30 @@
 ﻿{
     "version": 10,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 31,
+        "major": 4,
+        "minor": 0,
         "patch": 1
     },
     "include": [
-        "cmake/platform/common/CMakePresets.json",
         "cmake/platform/linux/CMakePresets.json",
         "cmake/platform/windows/CMakePresets.json"
     ],
-    "configurePresets": [],
+    "configurePresets": [
+        {
+            "name": "Configure preset using toolchain file",
+            "displayName": "Configure preset using toolchain file",
+            "description": "Sets Ninja generator, build and install directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+            }
+        }
+    ],
     "buildPresets": [],
-    "testPresets": []
+    "testPresets": [],
+    "packagePresets": [],
+    "workflowPresets": []
 }

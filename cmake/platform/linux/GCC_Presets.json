@@ -1,0 +1,391 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 4,
+        "minor": 0,
+        "patch": 1
+    },
+    "$comment": "Linux GCC presets",
+    "include": [
+        "../common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "linux-base-gcc",
+            "inherits": [
+                "linux-base",
+                "Qt-deps"
+            ],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+
+        {
+            "name": "linux-x64-gcc-static-nmc",
+            "displayName": "Linux GCC x64 Static Ninja",
+            "description": "Linux GCC x64 Static Ninja-MultiConfig",
+            "inherits": [
+				"linux-base-gcc",
+                "ninja-multiconfig",
+                "configure-static"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-static"
+            }
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-nmc",
+            "displayName": "Linux GCC x64 Dynamic Ninja",
+            "description": "Linux GCC x64 Dynamic Ninja-MultiConfig",
+            "inherits": [
+				"linux-base-gcc",
+                "ninja-multiconfig",
+                "configure-shared"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-dynamic"
+            }
+        },
+
+        {
+            "name": "linux-x64-gcc-static-make",
+            "hidden": true,
+            "inherits": [
+				"linux-base-gcc",
+                "make-config",
+                "configure-static"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-static"
+            }
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-make",
+            "hidden": true,
+            "inherits": [
+				"linux-base-gcc",
+                "make-config",
+                "configure-shared"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-dynamic"
+            }
+        },
+
+        {
+            "name": "linux-x64-gcc-static-make-debug",
+            "displayName": "Linux x64. GCC Make. Static Debug",
+            "description": "Linux x64. GCC Make. Static Debug Configure",
+            "inherits": [
+                "linux-x64-gcc-static-make",
+                "configure-debug"
+            ]
+        },
+        {
+            "name": "linux-x64-gcc-static-make-release",
+            "displayName": "Linux x64. GCC Make. Static Release",
+            "description": "Linux x64. GCC Make. Static Release Configure",
+            "inherits": [
+                "linux-x64-gcc-static-make",
+                "configure-release"
+            ]
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-make-debug",
+            "displayName": "Linux x64. GCC Make. Dynamic Debug",
+            "description": "Linux x64. GCC Make. Dynamic Debug Configure",
+            "inherits": [
+                "linux-x64-gcc-dynamic-make",
+                "configure-debug"
+            ]
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-make-release",
+            "displayName": "Linux x64. GCC Make. Dynamic Release",
+            "description": "Linux x64. GCC Make. Dynamic Release Configure",
+            "inherits": [
+                "linux-x64-gcc-dynamic-make",
+                "configure-release"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "linux-x64-gcc-dynamic-ninja-debug",
+            "displayName": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Debug",
+            "description": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Debug Build",
+            "configurePreset": "linux-x64-gcc-dynamic-nmc",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-ninja-release",
+            "displayName": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Release",
+            "description": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Release Build",
+            "configurePreset": "linux-x64-gcc-dynamic-nmc",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-x64-gcc-static-ninja-debug",
+            "displayName": "Linux x64 Static. GCC Ninja-MultiConfig. Debug",
+            "description": "Linux x64 Static. GCC Ninja-MultiConfig. Debug Build",
+            "configurePreset": "linux-x64-gcc-static-nmc",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-gcc-static-ninja-release",
+            "displayName": "Linux x64 Static. GCC Ninja-MultiConfig. Release",
+            "description": "Linux x64 Static. GCC Ninja-MultiConfig. Release Build",
+            "configurePreset": "linux-x64-gcc-static-nmc",
+            "configuration": "Release"
+        },
+
+        {
+            "name": "linux-x64-gcc-dynamic-make-debug-build",
+            "displayName": "Linux x64 Dynamic. GCC Make. Debug",
+            "description": "Linux x64 Dynamic. GCC Make. Debug Build",
+            "configurePreset": "linux-x64-gcc-dynamic-make-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-make-release-build",
+            "displayName": "Linux x64 Dynamic. GCC Make. Release",
+            "description": "Linux x64 Dynamic. GCC Make. Release Build",
+            "configurePreset": "linux-x64-gcc-dynamic-make-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-x64-gcc-static-make-debug-build",
+            "displayName": "Linux x64 Static. GCC Make. Debug",
+            "description": "Linux x64 Static. GCC Make. Debug Build",
+            "configurePreset": "linux-x64-gcc-static-make-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-gcc-static-make-release-build",
+            "displayName": "Linux x64 Static. GCC Make. Release",
+            "description": "Linux x64 Static. GCC Make. Release Build",
+            "configurePreset": "linux-x64-gcc-static-make-release",
+            "configuration": "Release"
+        },
+
+        {
+            "name": "linux-x64-gcc-dynamic-ninja-debug-install",
+            "displayName": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Debug Install",
+            "description": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Debug Build Install",
+            "inherits":[
+                "linux-x64-gcc-dynamic-ninja-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-ninja-release-install",
+            "displayName": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Release Install",
+            "description": "Linux x64 Dynamic. GCC Ninja-MultiConfig. Release Build Install",
+            "inherits":[
+                "linux-x64-gcc-dynamic-ninja-release"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-static-ninja-debug-install",
+            "displayName": "Linux x64 Static. GCC Ninja-MultiConfig. Debug Install",
+            "description": "Linux x64 Static. GCC Ninja-MultiConfig. Debug Build Install",
+            "inherits":[
+                "linux-x64-gcc-static-ninja-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-static-ninja-release-install",
+            "displayName": "Linux x64 Static. GCC Ninja-MultiConfig. Release Install",
+            "description": "Linux x64 Static. GCC Ninja-MultiConfig. Release Build Install",
+            "inherits":[
+                "linux-x64-gcc-static-ninja-release"
+            ],
+            "targets": "install"
+        },
+
+        {
+            "name": "linux-x64-gcc-dynamic-make-debug-install",
+            "displayName": "Linux x64 Dynamic. GCC Unix Make. Debug Install",
+            "description": "Linux x64 Dynamic. GCC Unix Make. Debug Build Install",
+            "inherits":[
+                "linux-x64-gcc-dynamic-make-debug-build"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-dynamic-make-release-install",
+            "displayName": "Linux x64 Dynamic. GCC Unix Make. Release Install",
+            "description": "Linux x64 Dynamic. GCC Unix Make. Release Build Install",
+            "inherits":[
+                "linux-x64-gcc-dynamic-make-release-build"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-static-make-debug-install",
+            "displayName": "Linux x64 Static. GCC Unix Make. Debug Install",
+            "description": "Linux x64 Static. GCC Unix Make. Debug Build Install",
+            "inherits":[
+                "linux-x64-gcc-static-make-debug-build"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-gcc-static-make-release-install",
+            "displayName": "Linux x64 Static. GCC Unix Make. Release Install",
+            "description": "Linux x64 Static. GCC Unix Make. Release Build Install",
+            "inherits":[
+                "linux-x64-gcc-static-make-release-build"
+            ],
+            "targets": "install"
+        }
+    ],
+    "testPresets": [],
+    "packagePresets": [],
+    "workflowPresets": [
+        {
+            "name": "wf-linux-x64-gcc-ninja-dynamic-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-dynamic-nmc"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-ninja-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-ninja-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-gcc-ninja-dynamic-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-dynamic-nmc"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-ninja-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-ninja-release-install"
+                }
+            ]
+        },
+
+        {
+            "name": "wf-linux-x64-gcc-ninja-static-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-static-nmc"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-ninja-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-ninja-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-gcc-ninja-static-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-static-nmc"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-ninja-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-ninja-release-install"
+                }
+            ]
+        },
+
+        {
+            "name": "wf-linux-x64-gcc-make-dynamic-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-dynamic-make-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-make-debug-build"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-make-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-gcc-make-dynamic-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-dynamic-make-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-make-release-build"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-dynamic-make-release-install"
+                }
+            ]
+        },
+
+        {
+            "name": "wf-linux-x64-gcc-make-static-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-static-make-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-make-debug-build"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-make-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-gcc-make-static-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-gcc-static-make-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-make-release-build"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-gcc-static-make-release-install"
+                }
+            ]
+        }
+    ]
+}

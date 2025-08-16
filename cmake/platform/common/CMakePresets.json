@@ -1,47 +1,17 @@
 ﻿{
     "version": 10,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 31,
+        "major": 4,
+        "minor": 0,
         "patch": 1
     },
     "configurePresets": [
         {
-            "name": "default",
+            "name": "configure-default",
             "description": "Placeholder configuration that buildPresets and testPresets can inherit from",
             "hidden": true
         },
-        {
-            "name": "os-independent",
-            "description": "Base Settings for all OSs",
-            "hidden": true,
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "installDir": "${sourceDir}/out/install/${presetName}",
-            "environment": {
-                "VCPKG_FEATURE_FLAGS": "manifests,versions,binarycaching",
-                "VCPKG_DISABLE_METRICS": "ON",
-                "VCPKG_BINARY_SOURCES": "clear;default,readwrite"
-            }
-        },
-        {
-            "name": "ninja-singleconfig",
-            "description": "Ninja Single-Config build",
-            "hidden": true,
-            "generator": "Ninja"
-        },
-        {
-            "name": "ninja-multiconfig",
-            "description": "Ninja Multi-Config build",
-            "hidden": true,
-            "generator": "Ninja Multi-Config",
-            "cacheVariables": {
-                "CMAKE_CONFIGURATION_TYPES": "Debug;RelWithDebInfo;Release",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": {
-                    "type": "BOOL",
-                    "value": "ON"
-                }
-            }
-        },
+
         {
             "name": "host-linux",
             "description": "Specifies Linux host condition for configure preset",
@@ -62,21 +32,229 @@
                 "rhs": "Windows"
             }
         },
+
         {
-            "name": "host-windows-linux",
-            "description": "Allows Windows or Linux to be used for host condition for configure preset",
+            "name": "configure-debug",
+            "description": "Debug configuration for single-config generator",
             "hidden": true,
-            "condition": {
-                "type": "inList",
-                "string": "${hostSystemName}",
-                "list": [
-                    "Linux",
-                    "Windows"
-                ]
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Debug"
+                }  
+            }
+        },
+        {
+            "name": "configure-release",
+            "description": "Release configuration for single-config generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Release"
+                }  
+            }
+        },
+        {
+            "name": "configure-profile",
+            "description": "Profile configuration for single-config generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Profile"
+                }  
+            }
+        },
+        {
+            "name": "configure-relwithdebinfo",
+            "description": "RelWithDebInfo configuration for single-config generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "RelWithDebInfo"
+                }  
+            }
+        },
+        {
+            "name": "configure-minsizerel",
+            "description": "MinSizeRel configuration for single-config generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "MinSizeRel"
+                }  
+            }
+        },
+
+        {
+            "name": "configure-shared",
+            "description": "Shared configuration",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "configure-static",
+            "description": "Static configuration",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                }
+            }
+        },
+
+        {
+            "name": "os-independent",
+            "description": "Base Settings for all OSs",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "environment": {
+                "VCPKG_FEATURE_FLAGS": "manifests,versions,binarycaching",
+                "VCPKG_DISABLE_METRICS": "ON",
+                "VCPKG_BINARY_SOURCES": "clear;default,readwrite"
+            },
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                }
+            }
+        },
+        {
+            "name": "linux-base",
+            "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system",
+            "hidden": true,
+            "inherits": [
+                "os-independent",
+                "host-linux"
+            ],
+            "cacheVariables": {
+                "CMAKE_INSTALL_LIBDIR": {
+                    "value": "${sourceDir}/out/install/${presetName}/lib",
+                    "type": "PATH"
+                }
+            },
+            "environment": {
+                "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/cmake/custom-triplets"
+            }
+        },
+        {
+            "name": "windows-base",
+            "description": "Target Windows with the Visual Studio development environment",
+            "hidden": true,
+            "inherits": [
+                "os-independent",
+                "host-windows"
+            ],
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [ "Windows" ]
+                }
+            }
+        },
+
+        {
+            "name": "compile-commands-json",
+            "description": "Generate compile_commands.json file when used with a Makefile or Ninja Generator",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "make-config",
+            "description": "Make build system generator",
+            "hidden": true,
+            "inherits":[
+                "compile-commands-json"
+            ],
+            "generator": "Unix Makefiles"
+            
+        },
+        {
+            "name": "ninja-multiconfig",
+            "description": "Ninja Multi-Config build",
+            "hidden": true,
+            "inherits":[
+                "compile-commands-json"
+            ],
+            "generator": "Ninja Multi-Config"
+        },
+        {
+            "name": "Qt-deps",
+            "description": "Qt SDK Path",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": {
+                    "value": "$env{QTDIR}",
+                    "type": "PATH"
+                }
+            }
+        },
+
+        {
+            "name": "qtcreator",
+            "description": "QtCreator IDE",
+            "hidden": true,
+            "vendor": {
+                "qt.io/QtCreator/1.0": {
+                    "AskBeforePresetsReload": false,
+                    "AskReConfigureInitialParams": false,
+                    "AutorunCMake": false,
+                    "PackageManagerAutoSetup": false,
+                    "ShowAdvancedOptionsByDefault": true,
+                    "ShowSourceSubFolders": false,
+                    "UseJunctionsForSourceAndBuildDirectories": true
+                }
+            }
+        },
+        {
+            "name": "microsoft-ide",
+            "description": "Microsoft remote IDE preset for Linux",
+            "hidden": true,
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [ "Windows" ]
+                }
+            }
+        },
+        {
+            "name": "microsoft-ide-remote",
+            "description": "Microsoft remote IDE preset for Linux",
+            "hidden": true,
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [ "Linux" ]
+                },
+                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+                }
             }
         }
     ],
     "buildPresets": [
-
-    ]
+        {
+            "name": "clean-build",
+            "displayName": "Clean Build",
+            "description": "Build target clean only",
+            "targets": "clean",
+            "configurePreset": "configure-default"
+        }
+    ],
+    "testPresets": [],
+    "packagePresets": [],
+    "workflowPresets": []
 }

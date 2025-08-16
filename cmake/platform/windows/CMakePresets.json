@@ -1,34 +1,15 @@
 ﻿{
-    "version": 6,
+    "version": 10,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 27,
+        "major": 4,
+        "minor": 0,
         "patch": 1
     },
     "include": [
         "../common/CMakePresets.json"
     ],
     "configurePresets": [
-        {
-            "name": "windows-base",
-            "description": "Target Windows with the Visual Studio development environment",
-            "hidden": true,
-            "inherits": [
-                "os-independent",
-                "host-windows"
-            ],
-            "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": {
-                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-                    "type": "FILEPATH"
-                }
-            },
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "hostOS": [ "Windows" ]
-                }
-            }
-        },
+        
 
         {
             "name": "windows-base-clang",
@@ -106,6 +87,15 @@
             }
         },
         {
+            "name": "windows-x64-msvc-dynamic-otlp",
+            "displayName": "MSVC x64 Dynamic with OpenTelemetry",
+            "inherits": [ "windows-x64-msvc-dynamic" ],
+            "cacheVariables": {
+                "BUILD_OTLP": "ON"
+            }
+        },
+
+        {
             "name": "windows-x64-clang-static",
             "displayName": "Clang x64 Static",
             "inherits": [
@@ -127,21 +117,12 @@
                 "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
             }
         },
-
         {
-            "name": "windows-x64-msvc-dynamic-debug-local",
-            "displayName": "MSVC x64 Dynamic Debug (with local mebius-base)",
-            "description": "Allows simultaneously edit medriver and mebius-base",
-            "inherits": [
-                "windows-x64-msvc-dynamic",
-                "ninja-singleconfig"
-            ],
+            "name": "windows-x64-msvc-static-otlp",
+            "displayName": "MSVC x64 Static with OpenTelemetry",
+            "inherits": [ "windows-x64-msvc-static" ],
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            },
-            "environment": {
-                "VCPKG_OVERLAY_PORTS": "${sourceDir}/vcpkg-debug-ports/ports/mebius-base/1.0.0;${sourceDir}/vcpkg-debug-ports/ports/vcpkg-from-local/1.0.0",
-                "VCPKG_FEATURE_FLAGS": "manifests,versions,registries,-binarycaching"
+                "BUILD_OTLP": "ON"
             }
         }
     ],
@@ -156,6 +137,18 @@
             "name": "windows-x64-msvc-dynamic-release",
             "displayName": "MSVC x64 Dynamic Release",
             "configurePreset": "windows-x64-msvc-dynamic",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "windows-x64-msvc-dynamic-debug-otlp",
+            "displayName": "MSVC x64 Dynamic Debug OTLP",
+            "configurePreset": "windows-x64-msvc-dynamic-otlp",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-x64-msvc-dynamic-release-otlp",
+            "displayName": "MSVC x64 Dynamic Release OTLP",
+            "configurePreset": "windows-x64-msvc-dynamic-otlp",
             "configuration": "RelWithDebInfo"
         },
         {

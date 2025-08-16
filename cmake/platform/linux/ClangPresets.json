@@ -1,0 +1,380 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 4,
+        "minor": 0,
+        "patch": 1
+    },
+    "$comment": "Linux Clang presets",
+    "include": [
+        "../common/CMakePresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "linux-base-clang-nmc",
+            "inherits": [
+                "linux-base",
+                "ninja-multiconfig",
+                "Qt-deps"
+            ],          
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_FLAGS": "-stdlib=libc++ -pthread -fexperimental-library",
+                "CMAKE_CXX_FLAGS": "-stdlib=libc++ -pthread -fexperimental-library -Wno-missing-template-arg-list-after-template-kw"
+            },
+            "environment": {
+                "CC": "clang",
+                "CXX": "clang++",
+                "LDFLAGS": "-fuse-ld=lld -lpthread -lrt"
+            }
+        },
+        {
+            "name": "linux-clang-libstdcpp-nmc",
+            "inherits": [
+                "linux-base",
+                "ninja-multiconfig",
+                "Qt-deps"
+            ],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_CXX_FLAGS": "-Wno-missing-template-arg-list-after-template-kw"
+            },
+            "environment": {
+                "CC": "clang",
+                "CXX": "clang++"
+            }
+        },
+
+        {
+            "name": "linux-x64-clang-static",
+            "displayName": "Linux x64 Clang Vanilla Static",
+            "description": "Linux x64 Clang Vanilla Static Configure",
+            "inherits": [
+				"linux-base-clang-nmc",
+                "configure-static"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-llvm-static"
+            }
+        },
+        {
+            "name": "linux-x64-clang-dynamic",
+            "displayName": "Linux x64 Clang Vanilla Dynamic",
+            "description": "Linux x64 Clang Vanilla Dynamic Configure",
+            "inherits": [
+				"linux-base-clang-nmc",
+                "configure-shared"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-llvm-dynamic"
+            }
+        },
+
+		{
+            "name": "linux-x64-clang-libstdcpp-static",
+            "displayName": "Linux x64 Clang with GNU C++ Lib Static",
+            "description": "Linux x64 Clang with GNU C++ Lib Static Configure",
+            "inherits": [
+				"linux-clang-libstdcpp-nmc",
+                "configure-static"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-static"
+            }
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-dynamic",
+            "displayName": "Linux x64 Clang with GNU C++ Lib Dynamic",
+            "description": "Linux x64 Clang with GNU C++ Lib Dynamic Configure",
+            "inherits": [
+				"linux-clang-libstdcpp-nmc",
+                "configure-shared"
+			],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-linux-dynamic"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "linux-x64-clang-dynamic-debug",
+            "displayName": "Linux Clang Vanilla x64 Dynamic Debug",
+            "description": "Linux x64 Clang Vanilla Dynamic Debug Build",
+            "configurePreset": "linux-x64-clang-dynamic",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-clang-dynamic-release",
+            "displayName": "Linux Clang Vanilla x64 Dynamic Release",
+            "description": "Linux x64 Clang Vanilla Dynamic Release Build",
+            "configurePreset": "linux-x64-clang-dynamic",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-x64-clang-static-debug",
+            "displayName": "Linux Clang Vanilla x64 Static Debug",
+            "description": "Linux x64 Clang Vanilla Static Debug Build",
+            "configurePreset": "linux-x64-clang-static",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-clang-static-release",
+            "displayName": "Linux Clang Vanilla x64 Static Release",
+            "description": "Linux x64 Clang Vanilla Static Release Build",
+            "configurePreset": "linux-x64-clang-static",
+            "configuration": "Release"
+        },
+
+        {
+            "name": "linux-x64-clang-libstdcpp-dynamic-debug",
+            "displayName": "Linux Clang with GNU C++ Lib x64 Dynamic Debug",
+            "description": "Linux Clang with GNU C++ Lib x64 Dynamic Debug Build",
+            "configurePreset": "linux-x64-clang-libstdcpp-dynamic",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-dynamic-release",
+            "displayName": "Linux Clang with GNU C++ Lib x64 Dynamic Release",
+            "description": "Linux Clang with GNU C++ Lib x64 Dynamic Release Build",
+            "configurePreset": "linux-x64-clang-libstdcpp-dynamic",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-static-debug",
+            "displayName": "Linux Clang with GNU C++ Lib x64 Static Debug",
+            "description": "Linux Clang with GNU C++ Lib x64 Static Debug Build",
+            "configurePreset": "linux-x64-clang-libstdcpp-static",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-static-release",
+            "displayName": "Linux Clang with GNU C++ Lib x64 Static Release",
+            "description": "Linux Clang with GNU C++ Lib x64 Static Release Build",
+            "configurePreset": "linux-x64-clang-libstdcpp-static",
+            "configuration": "Release"
+        },
+
+        {
+            "name": "linux-x64-clang-dynamic-debug-install",
+            "displayName": "Linux Clang Vanilla x64. Dynamic Debug Install",
+            "description": "Linux x64 Clang Vanilla. Dynamic Debug Install",
+            "inherits": [
+                "linux-x64-clang-dynamic-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-dynamic-release-install",
+            "displayName": "Linux Clang Vanilla x64. Dynamic Release Install",
+            "description": "Linux x64 Clang Vanilla. Dynamic Release Install",
+            "inherits": [
+                "linux-x64-clang-dynamic-release"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-static-debug-install",
+            "displayName": "Linux Clang Vanilla x64. Static Debug Install",
+            "description": "Linux x64 Clang Vanilla. Static Debug Install",
+            "inherits": [
+                "linux-x64-clang-static-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-static-release-install",
+            "displayName": "Linux Clang Vanilla x64. Static Release Install",
+            "description": "Linux x64 Clang Vanilla. Static Release Install",
+            "inherits": [
+                "linux-x64-clang-static-release"
+            ],
+            "targets": "install"
+        },
+
+        {
+            "name": "linux-x64-clang-libstdcpp-dynamic-debug-install",
+            "displayName": "Linux Clang with GNU C++ Lib x64. Dynamic Debug Install",
+            "description": "Linux Clang with GNU C++ Lib x64. Dynamic Debug Install",
+            "inherits": [
+                "linux-x64-clang-libstdcpp-dynamic-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-dynamic-release-install",
+            "displayName": "Linux Clang with GNU C++ Lib x64. Dynamic Release Install",
+            "description": "Linux Clang with GNU C++ Lib x64. Dynamic Release Install",
+            "inherits": [
+                "linux-x64-clang-libstdcpp-dynamic-release"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-static-debug-install",
+            "displayName": "Linux Clang with GNU C++ Lib x64. Static Debug Install",
+            "description": "Linux Clang with GNU C++ Lib x64. Static Debug Install",
+            "inherits": [
+                "linux-x64-clang-libstdcpp-static-debug"
+            ],
+            "targets": "install"
+        },
+        {
+            "name": "linux-x64-clang-libstdcpp-static-release-install",
+            "displayName": "Linux Clang with GNU C++ Lib x64. Static Release Install",
+            "description": "Linux Clang with GNU C++ Lib x64. Static Release Install",
+            "inherits": [
+                "linux-x64-clang-libstdcpp-static-release"
+            ],
+            "targets": "install"
+        }
+    ],
+    "testPresets": [],
+    "packagePresets": [],
+    "workflowPresets": [
+        {
+            "name": "wf-linux-x64-clang-dynamic-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-dynamic"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-dynamic-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-dynamic-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-clang-dynamic-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-dynamic"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-dynamic-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-dynamic-release-install"
+                }
+            ]
+        },
+
+        {
+            "name": "wf-linux-x64-clang-static-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-static"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-static-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-static-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-clang-static-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-static"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-static-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-static-release-install"
+                }
+            ]
+        },
+
+
+
+        {
+            "name": "wf-linux-x64-clang-libstdcpp-dynamic-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-libstdcpp-dynamic"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-dynamic-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-dynamic-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-clang-libstdcpp-dynamic-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-libstdcpp-dynamic"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-dynamic-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-dynamic-release-install"
+                }
+            ]
+        },
+
+        {
+            "name": "wf-linux-x64-clang-libstdcpp-static-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-libstdcpp-static"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-static-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-static-debug-install"
+                }
+            ]
+        },
+        {
+            "name": "wf-linux-x64-clang-libstdcpp-static-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux-x64-clang-libstdcpp-static"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-static-release"
+                },
+                {
+                    "type": "build",
+                    "name": "linux-x64-clang-libstdcpp-static-release-install"
+                }
+            ]
+        }
+    ]
+}
