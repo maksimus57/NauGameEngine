@@ -1,3 +1,4 @@
 # .vscode directory
 .vscode/
-CMakeLists.txt.users
+CMakeLists.txt.user
+out/
