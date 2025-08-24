@@ -1,40 +1,40 @@
 {
-    "name": "NauGameEngine",
+    "name": "nau-game-engine",
     "version-string": "1.0.0.0",
     "dependencies": [],
     "default-features": [
-        "build-nau-engine"
+        "nau-engine"
     ],
     "features": {
-        "build-nau-engine": {
+        "nau-engine": {
             "description": "Nau Engine",
             "dependencies": [
                 {
-                    "name": "",
-                    "version>=": ""
+                    "name": "protobuf",
+                    "version>=": "3.21.12#2"
                 },
                 {
-                    "name": "",
-                    "version>=": ""
+                    "name": "directx-dxc",
+                    "version>=": "2024-03-07"
                 },
                 {
-                    "name": "",
-                    "version>=": ""
+                    "name": "boost",
+                    "version>=": "1.88.0"
                 }
             ]
         },
-        "build-nau-editor": {
+        "nau-editor": {
             "description": "Nau Editor",
             "dependencies": [
-                ""
+
             ]
         },
-        "build-nau-as": {
+        "nau-as": {
             "description": "Nau Agnostic Scripting",
             "dependencies": [
-                ""
+
             ]
         }
     },
-    "builtin-baseline": "74ec888e385d189b42d6b398d0bbaa6f1b1d3b0e"
+    "builtin-baseline": "6ecbbbdf31cba47aafa7cf6189b1e73e10ac61f8"
 }
