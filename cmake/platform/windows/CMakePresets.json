@@ -52,7 +52,7 @@
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "cl.exe",
                 "CMAKE_CXX_COMPILER": "cl.exe",
-                "CMAKE_CXX_FLAGS": "/execution-charset:utf-8 /D_UNICODE /DUNICODE /experimental:external /external:anglebrackets /external:W0 /EHsc"
+                "CMAKE_CXX_FLAGS": "/execution-charset:utf-8 /D_UNICODE /DUNICODE /experimental:external /external:anglebrackets /external:W0 /EHsc /MP"
             },
             "toolset": {
                 "value": "host=x64",
